@@ -1,0 +1,74 @@
+\documentclass[conference, onecolumn]{IEEEtran}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\usepackage[babel=true]{microtype}
+\usepackage[english]{babel}
+
+\usepackage{datetime}
+
+\usepackage[sorting=none]{biblatex}
+\addbibresource{references.bib}
+
+\renewcommand\IEEEkeywordsname{Keywords}
+
+\title{
+	Hybrid Architecture with Deep Learning for Data Mining Applications
+	\\\vspace*{20pt}\normalsize\today{} (\currenttime)
+}
+
+\author{\IEEEauthorblockN{João~Loureiro}
+	\IEEEauthorblockA{Informatics and Computing Engineering\\
+		Faculty of Engineering, University of Porto\\
+		Rua Dr. Roberto Frias, s/n, 4200--465\\
+		Email: ei08101@fe.up.pt}}
+	
+\begin{document}
+	
+\maketitle
+
+\begin{abstract}
+	% O contexto do problema
+	% \textbf{Context:}
+	
+	% O problema que vai ser tratado
+	% \textbf{Problem:}
+	
+	% O que torna o problema interessante
+	% \textbf{Motivation:}
+	
+	% Escrita da hipótese a ser testada. Proposta e construção de um sistema com determinadas características para uso numa experiência que procurará determinar se a hipótese está certa ou não.
+	% \textbf{Proposed Solution:}
+	
+	% O método pelo qual as experiências serão efetuadas de modo a validar a hipótese
+	% \textbf{Scientific Method:}
+	
+	% Os resultados esperados
+	% \textbf{Expected Results:}
+	
+	% O impacto do estudo tanto para o meio scientífico como para o social
+	% \textbf{Impact:}
+	
+	The health sciences are applied sciences used in the delivery of health care to human beings. These sciences are increasingly using the field of \textit{Bioinformatics} \cite{bayat2002science} which is responsible for developing methods and applying tools of computation and analysis to extract knowledge of biological data. \cite{dhar2013data}
+	
+	In the globalizing world, knowledge and information are seen as keys of power and a new trading good. \cite{yigitcanlar2008knowledge} Information is widely spread and public, the main challenge to extract usable and needed knowledge is in the diversity, volume and complexity of the available data. Particularly in \textit{Bioinformatics} and computational biology we face not only increased volume and a diversity of highly complex, multidimensional and often weakly-structured and noisy data, but also the growing need for integrative analysis and modeling. \cite{holzinger2011weakly} \cite{ouzzani2013introduction} Some examples of the data that we are addressing include: X-ray; Mammography; Electrocardiography; Clinical Analysis; Patient's Medical History.
+	
+	Machine Learning algorithms or Data Mining have some limitations on the analysis of a wide range of multidimensional data. Deep Learning for instance is well suited for the classification of images and numeric attributes. \cite{esteva2017dermatologist} Decision trees truly shine on conditional probabilities with categorical data. \cite{safavian1991survey} However neither Deep Learning nor Decision trees can be used to a direct analysis of relational data.
+	
+	The goal of our work is to test if an Hybrid Architecture \cite{xu2006analysis} can be an advantage to process and extract knowledge from this diverse data taking into account the specificity's of a wide range of Machine Learning and Data Mining algorithms. This hybrid approach must be able to deal with a heterogeneous set of information picking the right algorithm for each subset of data and combine the results of each subset to output a good result.
+	
+	We test the various Machine Learning algorithms, such as Random Forest, SVMs, Decision Trees, Neural Networks and others, against the existing subsets that can be images, tabular data, reports \textit{et al} and do a performance measures of these algorithms to see which algorithms are better for each specific subset of data. After this phase we apply the previous knowledge and combine the multiple subsets results and verify how many times were we correct.
+	
+	At the end we expect that our approach can produce better results in comparison to what already exists and be used to improve the health care system.
+	
+\end{abstract}
+
+\begin{IEEEkeywords}
+	Data Mining, Machine Learning, Hybrid Architecture, Bioinformatics, Health Sciences.
+\end{IEEEkeywords}
+
+\printbibliography
+	
+\end{document}
