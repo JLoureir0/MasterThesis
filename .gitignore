@@ -1,2 +1,5 @@
 data/db/
 .ipynb_checkpoints/
+data/skin
+data/stomach
+data/thyroid
