@@ -1,5 +1,19 @@
+# Cancer DB's
+
 data/db/
 .ipynb_checkpoints/
 data/skin
 data/stomach
 data/thyroid
+
+# Python
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django:
+*.log
+local_settings.py
+db.sqlite3

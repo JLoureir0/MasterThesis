@@ -11,3 +11,10 @@ services:
     volumes:
       - ./data/db:/data/db
     command: mongod --smallfiles --logpath=/dev/null # --quiet
+  django:
+    build: ./webapp
+    ports:
+      - 8000:8000
+    volumes:
+      - ./webapp:/webapp
+    command: python3 manage.py runserver 0.0.0.0:8000
