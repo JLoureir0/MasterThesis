@@ -7,6 +7,11 @@
 	    <small class="text-muted">June 2018</small>
 	</div>
 	<h2><a class="article-title" href="#">Records:</a></h2>
+	<ul>
+	    {% for attribute in attributes %}
+	    <li>{{ attribute }}</li>
+	    {% endfor %}
+	</ul>
     </div>
 </article>
 {% endblock %}
