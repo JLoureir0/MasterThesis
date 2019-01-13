@@ -8,8 +8,8 @@
 	</div>
 	<h2><a class="article-title" href="#">Records:</a></h2>
 	<ul>
-	    {% for attribute in attributes %}
-	    <li><a href="{% url 'stats-attribute' database=database collection=collection attribute=attribute %}">{{ attribute }}</a></li>
+	    {% for value in attribute_stats.values %}
+	    <li>{{ value }}</li>
 	    {% endfor %}
 	</ul>
     </div>

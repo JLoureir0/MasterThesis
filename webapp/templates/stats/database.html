@@ -1,13 +1,14 @@
 {% extends 'core/main.html' %}
 {% block content %}
-{% for collection,record in collections %}
+{% for collection,stats in collections %}
 <article class="media content-section">
     <div class="media-body">
 	<div class="article-metadata">
 	    <a class="mr-2" href="{% url 'stats-collection' database=database collection=collection %}">{{ collection }}</a>
 	    <small class="text-muted">June 2018</small>
 	</div>
-	<h2><a class="article-title" href="#">Records:</a>{{ record }}</h2>
+	<h2><a class="article-title" href="#">Records:</a>{{ stats.records }}</h2>
+	<h2><a class="article-title" href="#">Attributes:</a>{{ stats.attributes }}</h2>
     </div>
 </article>
 {% endfor %}
