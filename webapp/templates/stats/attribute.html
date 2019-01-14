@@ -1,17 +1,89 @@
 {% extends 'core/main.html' %}
 {% block content %}
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+ google.charts.load('current', {'packages':['corechart']});
+
+ {% if attribute_stats.values_counter|length < 10 %} 
+ google.charts.setOnLoadCallback(pieChart);
+ function pieChart() {
+
+     var data = google.visualization.arrayToDataTable([
+         ['Value', 'Number of Instances'],
+	 {% for value,count in attribute_stats.values_counter %}
+	 ['{{ value }}', {{ count }}],
+	 {% endfor %}
+     ]);
+
+     var options = {
+         title: 'Values'
+     };
+
+     var chart = new google.visualization.PieChart(document.getElementById('pie-chart'));
+
+     chart.draw(data, options);
+ }
+ {% endif %}
+
+ google.charts.setOnLoadCallback(distributionChart);
+ function distributionChart() {
+
+     var data = google.visualization.arrayToDataTable([
+	 ['Values'],
+	 {% for value in attribute_stats.values %}
+	 [{{ value }}],
+	 {% endfor %}
+     ]);
+
+     var options = {
+	 title: 'Distribution',
+	 legend: { position: 'none' },
+	 hAxis: {
+	     ticks: []
+	 } 
+     };
+
+     var chart = new google.visualization.Histogram(document.getElementById('distribution-chart'));
+     chart.draw(data, options);
+ } 
+</script>
+
 <article class="media content-section">
+
     <div class="media-body">
 	<div class="article-metadata">
 	    <a class="mr-2" href="#">{{ database }} - {{ collection }}</a>
 	    <small class="text-muted">June 2018</small>
 	</div>
-	<h2><a class="article-title" href="#">Records:</a></h2>
-	<ul>
-	    {% for value in attribute_stats.values %}
-	    <li>{{ value }}</li>
-	    {% endfor %}
-	</ul>
+	<h2><a class="article-title" href="#">{{ attribute }}:</a></h2>
+	<table class="table">
+	    <thead class="thead-light">
+		<tr>
+		    <th scope="col">Metric</th>
+		    <th scope="col">Value</th>
+		</tr>
+	    </thead>
+	    <tbody>
+		<tr>
+		    <th scope="row">Maximum</th>
+		    <td>{{ attribute_stats.max_value }}</td>
+		</tr>
+		<tr>
+		    <th scope="row">Minimum</th>
+		    <td>{{ attribute_stats.min_value }}</td>
+		</tr>
+		<tr>
+		    <th scope="row">Mean</th>
+		    <td>{{ attribute_stats.mean_value }}</td>
+		</tr>
+		<tr>
+		    <th scope="row">Median</th>
+		    <td>{{ attribute_stats.median_value }}</td>
+		</tr>
+	    </tbody>
+	</table>
+	<div id="pie-chart"></div>
+	<div id="distribution-chart"></div>
     </div>
 </article>
 {% endblock %}

@@ -1,5 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse, Http404
+
+from collections import Counter
+
 import pymongo
 
 mongo_client = pymongo.MongoClient('mongodb://mongodb:27017')
@@ -41,7 +44,13 @@ def attribute_stats(request, database, collection, attribute):
     if attribute not in mongo_client[database][collection].find_one({}):
         raise Http404
 
+    context['database'] = database
+    context['collection'] = collection
+    context['attribute'] = attribute
+
     context['attribute_stats'] = mongo_client['stats']['statistics'].find_one({ 'database': database, 'collection': collection, 'attribute': attribute })
+
+    context['attribute_stats']['values_counter'] = Counter(context['attribute_stats']['values']).items()
 
     return render(request, 'stats/attribute.html', context)
 
