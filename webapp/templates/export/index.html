@@ -1,0 +1,20 @@
+{% extends 'core/main.html' %}
+{% block content %}
+<article class="media content-section row">
+    <div class="media-body">
+	<div class="article-metadata">
+	    <h3 class="mr-2">Databases</a></h3>
+	</div>
+	<ul class="list-group">
+	    {% for database in databases %}
+	    <li class="list-group-item">
+		<a class="mr-2" href="{% url 'export-database' database=database %}">{{ database }}</a>
+		<a href="{% url 'export-database' database=database %}">
+		    <button type="button" class="btn btn-info bg-steel float-right">Export</button>
+		</a>
+	    </li>
+	    {% endfor %}
+	</ul>
+    </div>
+</article>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends 'core/main.html' %}
+{% block content %}
+<article class="media content-section row">
+    <div class="media-body">
+	<div>
+	    <h2>
+		<a class="mr-2" href="{% url 'export-database' database=database %}">{{ database | upper}}</a>
+	    </h2>
+	</div>
+	<ul class="list-group">
+	    <li class="list-group-item">
+		<h4><a class="article-title" href="#">Exams to include:</a></h4>
+		<form>
+		    {% for collection in collections %}
+		    <div class="form-check">
+			<input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+			<label class="form-check-label" for="defaultCheck1">
+			    {{ collection }}
+			</label>
+		    </div>
+		    {% endfor %}
+		</form>
+	    </li>
+	    <li class="list-group-item">
+		<h4>Validation type:</h4>
+		<form>
+		    <div class="form-check">
+			<input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+			<label class="form-check-label" for="exampleRadios1">
+			    Cross validation
+			</label>
+		    </div>
+		    <div class="form-check">
+			<input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+			<label class="form-check-label" for="exampleRadios2">
+			    Hold out validation
+			</label>
+		    </div>
+		</form>
+	    </li>
+	    <li class="list-group-item">
+		Stacking
+                <div class="material-switch float-right">
+                    <input id="someSwitchOptionInfo" name="someSwitchOption001" type="checkbox" unchecked/>
+                    <label for="someSwitchOptionInfo" class="bg-steel"></label>
+                </div>
+            </li>
+	</ul>
+	<center class="mt-3 mb-2">
+	    <button type="button" class="btn btn-info bg-steel">Export</button>
+	</center>
+    </div>
+</article>
+{% endblock %}
