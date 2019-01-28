@@ -4,10 +4,11 @@
 <article class="media content-section">
     <div class="media-body">
 	<div class="article-metadata">
-	    <a class="mr-2" href="{% url 'stats-database' database=database.name %}">{{ database.name }}</a>
-	    <small class="text-muted">June 2018</small>
+	    <h2>
+		<a class="mr-2" href="{% url 'stats-database' database=database.name %}">{{ database.name | upper }}</a>
+	    </h2>
 	</div>
-	<h2><a class="article-title" href="#">Exams:</a></h2>
+	<h4><a class="article-title" href="#">Exams:</a></h4>
 	<ul>
 	    {% for collection in database.collections %}
 	    <li class="article-content">{{ collection }}</li>
