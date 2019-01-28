@@ -7,9 +7,13 @@ import pymongo
 
 mongo_client = pymongo.MongoClient('mongodb://mongodb:27017')
 context = {'title': 'Stats'}
+context['sidebar'] = {'title': '', 'description': '', 'links': []}
 
 def home_stats(request):
     context['databases'] = []
+    context['sidebar']['title'] = 'Stats'
+    context['sidebar']['description'] = 'General statistics about your databases, select any of them to explore more details about it.'
+
     for database in mongo_client.list_database_names():
         if database not in ('admin','local','config','stats'):
             db = {'name': database, 'collections': mongo_client[database].list_collection_names()}
@@ -25,6 +29,11 @@ def database_stats(request, database):
     records = mongo_client['stats']['database']
     context['collections'] = sorted(records.find_one({ 'database': database })['collections'].items())
 
+    context['sidebar']['title'] = str.upper(database)
+    context['sidebar']['description'] = 'Listing with the exams from the ' + database + ', select any of the exams for more details about it.'
+    context['sidebar']['links'] = []
+    context['sidebar']['links'].append({'text': 'Export ' + database, 'view':'export-database', 'parameters':database})
+
     return render(request, 'stats/database.html', context)
 
 def collection_stats(request, database, collection):
@@ -35,6 +44,11 @@ def collection_stats(request, database, collection):
     context['collection'] = collection
     stat = mongo_client['stats']['collection'].find_one({ 'database': database, 'collection': collection })
     context['attributes'] = stat['attributes']
+
+    context['sidebar']['title'] = str.upper(database)
+    context['sidebar']['description'] = 'Listing with attributes of the ' + collection + ' exam from the ' + database + ', select any of the attributes for more details about it.'
+    context['sidebar']['links'] = []
+    context['sidebar']['links'].append({'text': 'Export ' + database, 'view':'export-database', 'parameters':database})
     
     return render(request, 'stats/collection.html', context)
 
@@ -51,6 +65,11 @@ def attribute_stats(request, database, collection, attribute):
     context['attribute_stats'] = mongo_client['stats']['statistics'].find_one({ 'database': database, 'collection': collection, 'attribute': attribute })
 
     context['attribute_stats']['values_counter'] = Counter(context['attribute_stats']['values']).items()
+
+    context['sidebar']['title'] = str.upper(database)
+    context['sidebar']['description'] = 'Statistics about ' + attribute + ' from the ' + collection + ' exam.'
+    context['sidebar']['links'] = []
+    context['sidebar']['links'].append({'text': 'Export ' + database, 'view':'export-database', 'parameters':database})
 
     return render(request, 'stats/attribute.html', context)
 

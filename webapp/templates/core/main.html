@@ -7,16 +7,30 @@
 	</div>
 	<div class="col-md-4">
 	    <div class="content-section">
-		<h3>Our Sidebar</h3>
-		<p class='text-muted'>You can put any information here you'd like.
-		    <ul class="list-group">
-			<li class="list-group-item list-group-item-light">Latest Posts</li>
-			<li class="list-group-item list-group-item-light">Announcements</li>
-			<li class="list-group-item list-group-item-light">Calendars</li>
-			<li class="list-group-item list-group-item-light">etc</li>
-		    </ul>
-		</p>
+		<div class="article-metadata">
+		    <h3>{{ sidebar.title }}</h3>
+		</div>
+		{% if sidebar.description %}
+		<p class='text-muted'>{{ sidebar.description }}</p>
+		{% endif %}
 	    </div>
+	    {% if sidebar.links %}
+	    <div class="content-section">
+		<div>
+		    <h3>Related Links</h3>
+		</div>
+		<ul class="list-group">
+		    {% for link in sidebar.links %}
+		    <a href="{% url link.view link.parameters %}">
+			<li class="list-group-item list-group-item-light">
+			    {{ link.text }}
+			    <i class="fas fa-chevron-right float-right"></i>
+			</li>
+		    </a>
+		    {% endfor %}
+		</ul>		
+	    </div>
+	    {% endif %}
 	</div>
     </div>
 </main>
