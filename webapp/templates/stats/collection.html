@@ -1,5 +1,11 @@
 {% extends 'core/main.html' %}
 {% block content %}
+
+{{ attributes | json_script:"attributes" }}
+
+{% load static %}
+<script src="{% static 'stats/search.js' %}"></script>
+
 <article class="media content-section">
     <div class="media-body">
 	<div class="article-metadata">
@@ -7,7 +13,15 @@
 		<a class="mr-2" href="#">{{ collection | upper }} records</a>
 	    </h2>
 	</div>
-	<ul class="list-inline">
+	<div class="input-group col-md-12">
+            <input type="text" id="search-input" class="search-query form-control" placeholder="Search" />
+            <span class="input-group-btn">
+                <button id="search-button" class="btn bg-steel mb-4" type="button">
+                    <i class="fas fa-search"></i>
+                </button>
+            </span>
+        </div>
+	<ul class="list-inline" id="search-content">
 	    {% for attribute in attributes %}
 	    <li class="list-inline-item"><a href="{% url 'stats-attribute' database=database collection=collection attribute=attribute %}">{{ attribute }}</a></li>
 	    {% endfor %}
