@@ -6,6 +6,7 @@ import pymongo
 mongo_client = pymongo.MongoClient('mongodb://mongodb:27017')
 context = {'title': 'Export'}
 context['sidebar'] = {'title': '', 'description': '', 'links': [] }
+context['breadcrumb'] = { 'title': {'name':'Export' }}
 
 def home_export(request):
     context['databases'] = []
@@ -16,6 +17,8 @@ def home_export(request):
     for database in mongo_client.list_database_names():
         if database not in ('admin','local','config','stats'):
             context['databases'].append(database)
+
+    context['breadcrumb'] = { 'title': {'name':'Export' }}
     return render(request, 'export/index.html', context)
 
 def database_export(request, database):
@@ -30,5 +33,10 @@ def database_export(request, database):
 
     records = mongo_client['stats']['database']
     context['collections'] = sorted(records.find_one({ 'database': database })['collections'].keys())
+
+    context['breadcrumb'] = {
+        'title': { 'name': 'Export', 'link': { 'view': 'export-home' }},
+        'database': { 'name': database }
+    }
 
     return render(request, 'export/database.html', context)

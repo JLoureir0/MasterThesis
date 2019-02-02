@@ -8,6 +8,7 @@ import pymongo
 mongo_client = pymongo.MongoClient('mongodb://mongodb:27017')
 context = {'title': 'Stats'}
 context['sidebar'] = {'title': '', 'description': '', 'links': []}
+context['breadcrumb'] = { 'title': {'name':'Stats' }}
 
 def home_stats(request):
     context['databases'] = []
@@ -18,6 +19,11 @@ def home_stats(request):
         if database not in ('admin','local','config','stats'):
             db = {'name': database, 'collections': mongo_client[database].list_collection_names()}
             context['databases'].append(db)
+
+    context['breadcrumb'] = {
+        'title': { 'name': 'Stats' }
+    }
+    
     return render(request, 'stats/index.html', context)
 
 def database_stats(request, database):
@@ -34,6 +40,11 @@ def database_stats(request, database):
     context['sidebar']['links'] = []
     context['sidebar']['links'].append({'text': 'Export ' + database, 'view':'export-database', 'parameters':database})
 
+    context['breadcrumb'] = {
+        'title': { 'name': 'Stats', 'link': { 'view': 'stats-home' }},
+        'database': { 'name': database }
+    }
+
     return render(request, 'stats/database.html', context)
 
 def collection_stats(request, database, collection):
@@ -49,6 +60,12 @@ def collection_stats(request, database, collection):
     context['sidebar']['description'] = 'Listing with attributes of the ' + collection + ' exam from the ' + database + ', select any of the attributes for more details about it.'
     context['sidebar']['links'] = []
     context['sidebar']['links'].append({'text': 'Export ' + database, 'view':'export-database', 'parameters':database})
+
+    context['breadcrumb'] = {
+        'title': { 'name': 'Stats', 'link': { 'view': 'stats-home' }},
+        'database': { 'name': database, 'link': { 'view': 'stats-database', 'parameters':database }},
+        'collection': { 'name': collection }
+    }
     
     return render(request, 'stats/collection.html', context)
 
@@ -70,6 +87,13 @@ def attribute_stats(request, database, collection, attribute):
     context['sidebar']['description'] = 'Statistics about ' + attribute + ' from the ' + collection + ' exam.'
     context['sidebar']['links'] = []
     context['sidebar']['links'].append({'text': 'Export ' + database, 'view':'export-database', 'parameters':database})
+
+    context['breadcrumb'] = {
+        'title': { 'name': 'Stats', 'link': { 'view': 'stats-home' }},
+        'database': { 'name': database, 'link': { 'view': 'stats-database', 'parameters':database }},
+        'collection': { 'name': collection, 'link': { 'view': 'stats-collection', 'parameters': {'database': database, 'collection': collection } }},
+        'attribute': { 'name': attribute }
+    }
 
     return render(request, 'stats/attribute.html', context)
 

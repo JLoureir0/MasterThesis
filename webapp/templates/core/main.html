@@ -3,6 +3,25 @@
 <main role="main" class="container">
     <div class="row">
 	<div class="col-md-8">
+	    <nav aria-label="breadcrumb">
+		<ol class="breadcrumb">
+		    {% if breadcrumb.title and breadcrumb.database and breadcrumb.collection and breadcrumb.attribute %}
+		    <li class="breadcrumb-item"><a href="{% url breadcrumb.title.link.view %}">{{ breadcrumb.title.name }}</a></li>
+		    <li class="breadcrumb-item"><a href={% url breadcrumb.database.link.view breadcrumb.database.link.parameters %}>{{ breadcrumb.database.name }}</a></li>
+		    <li class="breadcrumb-item"><a href="{% url breadcrumb.collection.link.view breadcrumb.collection.link.parameters.database breadcrumb.collection.link.parameters.collection %}">{{ breadcrumb.collection.name }}</a></li>
+		    <li class="breadcrumb-item active" aria-current="page">{{ breadcrumb.attribute.name }}</li>
+		    {% elif breadcrumb.title and breadcrumb.database and breadcrumb.collection %}
+		    <li class="breadcrumb-item"><a href="{% url breadcrumb.title.link.view %}">{{ breadcrumb.title.name }}</a></li>
+		    <li class="breadcrumb-item"><a href={% url breadcrumb.database.link.view breadcrumb.database.link.parameters %}>{{ breadcrumb.database.name }}</a></li>
+		    <li class="breadcrumb-item active" aria-current="page">{{ breadcrumb.collection.name }}</li>
+		    {% elif breadcrumb.title and breadcrumb.database %}
+		    <li class="breadcrumb-item"><a href="{% url breadcrumb.title.link.view %}">{{ breadcrumb.title.name }}</a></li>
+		    <li class="breadcrumb-item active" aria-current="page">{{ breadcrumb.database.name }}</li>
+		    {% elif breadcrumb.title %}
+		    <li class="breadcrumb-item active" aria-current="page">{{ breadcrumb.title.name }}</li>		    
+		    {% endif %}
+		</ol>
+	    </nav>
 	    {% block content %}{% endblock %}
 	</div>
 	<div class="col-md-4">
